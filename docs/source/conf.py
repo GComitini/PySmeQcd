@@ -17,9 +17,10 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-import pathlib
-import os, sys
-sys.path.insert(0, os.path.abspath('../../src'))
+#import pathlib
+# import os, sys
+# sys.path.insert(0, os.path.abspath('../../src'))
+import PySmeQcd
 
 
 # -- Project information -----------------------------------------------------
