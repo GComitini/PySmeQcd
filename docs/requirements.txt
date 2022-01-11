@@ -1,1 +1,2 @@
 sphinx-copybutton
+PySmeQcd==1.0.0a.1
