@@ -39,7 +39,7 @@ To use PySmeQcd from the source code:
   $ cd PySmeQcd-1.0.0a1/src
   ```
 
-3. Copy the ```PySmeQcd``` directory to the main directory of your project.
+3. Copy the ```PySmeQcd``` directory into the main directory of your project.
   ```console
   $ cp PySmeQcd <MY_PROJECT>
   ```
