@@ -1,0 +1,22 @@
+# OS
+.DS_STORE
+
+# Python
+build/
+dist/
+tests
+__pycache__/
+*.egg-info/
+*.egg
+*.py[cod]
+
+# Docs
+docs/build/
+
+# Backups
+*~
+
+# Personal
+src/PySmeQcd/oneloop/gaugeopt
+TODO
+LINKS
