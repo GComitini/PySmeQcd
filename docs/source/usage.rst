@@ -53,7 +53,7 @@ To use PySmeQcd from the source code:
 
 .. note::
 
-  PySmeQcd depends on:
+  PySmeQcd depends on the following Python packages:
 
   - matplotlib
   - numpy
