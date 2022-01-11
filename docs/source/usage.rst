@@ -32,18 +32,18 @@ From source
 
 To use PySmeQcd from the source code:
 
-1. Download the source code from `GitHub <https://github.com/GComitini/PySmeQcd/releases/download/v1.0.0-alpha/PySmeQcd-1.0.0a0.tar.gz>`_.
+1. Download the source code from `GitHub <https://github.com/GComitini/PySmeQcd/releases/download/v1.0.0-alpha.1/PySmeQcd-1.0.0a1.tar.gz>`_.
 
   .. code-block:: console
 
-    $ wget https://github.com/GComitini/PySmeQcd/releases/download/v1.0.0-alpha/PySmeQcd-1.0.0a0.tar.gz
+    $ wget https://github.com/GComitini/PySmeQcd/releases/download/v1.0.0-alpha.1/PySmeQcd-1.0.0a1.tar.gz
 
-2. Unpack the archive and :console:`cd` into the :file:`PySmeQcd-1.0.0a0/src` directory.
+2. Unpack the archive and :console:`cd` into the :file:`PySmeQcd-1.0.0a1/src` directory.
 
   .. code-block:: console
 
-    $ tar -xzvf PySmeQcd-1.0.0a0.tar.gz
-    $ cd PySmeQcd-1.0.0a0/src
+    $ tar -xzvf PySmeQcd-1.0.0a1.tar.gz
+    $ cd PySmeQcd-1.0.0a1/src
 
 3. Copy the :file:`PySmeQcd` directory to the main directory of your project.
 
