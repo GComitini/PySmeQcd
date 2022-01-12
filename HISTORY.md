@@ -5,8 +5,7 @@ Release History
 ------------------------
 
 - Fixed functions `dgluon_J_inv` and `gluon_spectral_plot` in `oneloop.gluon`
-- Fixed function `quark_SigS1` in `oneloop.quark`
-- Fixed function `dquark_SigV1` in `oneloop.quark`
+- Fixed functions `quark_SigS1` and `dquark_SigV1` in `oneloop.quark`
 - Fixed broken documentation link in README
 
 1.0.0-alpha (2022-01-11)
