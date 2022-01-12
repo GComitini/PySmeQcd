@@ -77,7 +77,7 @@ html_sidebars = {
 
 html_theme_options = {
     'github_user': 'GComitini',
-    'github_repo': 'Screened-Massive-QCD',
+    'github_repo': 'PySmeQcd',
     'description': 'A Python library for the Screened Massive Expansion of QCD',
     'sidebar_width': '24%',
     'sidebar_includehidden': 'false',

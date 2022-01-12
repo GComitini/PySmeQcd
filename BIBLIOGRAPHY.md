@@ -1,0 +1,17 @@
+# The Screened Massive Expansion of QCD
+
+1. [F. Siringo, Nucl. Phys. B 907, 572 (2016)](https://doi.org/10.1016/j.nuclphysb.2016.04.028)
+2. [F. Siringo, Phys. Rev. D 94, 114036 (2016)](https://doi.org/10.1103/PhysRevD.94.114036)
+3. [F. Siringo, EPJ Web Conf. 137, 03021 (2017)](https://doi.org/10.1051/epjconf/201713703021)
+4. [F. Siringo, EPJ Web Conf. 137, 13016 (2017)](https://doi.org/10.1051/epjconf/201713713016)
+5. [F. Siringo, EPJ Web Conf. 137, 13017 (2017)](https://doi.org/10.1051/epjconf/201713713017)
+6. [F. Siringo, Phys. Rev. D 96, 114020 (2017)](https://doi.org/10.1103/PhysRevD.96.114020)
+7. [G. Comitini, arXiv:1803.02335 (2018)](https://arxiv.org/abs/1803.02335)
+8. [G. Comitini and F. Siringo, Phys. Rev. D 97, 056013 (2018)](https://doi.org/10.1103/PhysRevD.97.056013)
+9. [F. Siringo and G. Comitini, Phys. Rev. D 98, 034023 (2018)](https://doi.org/10.1103/PhysRevD.98.034023)
+10. [F. Siringo, Phys. Rev. D 99, 094024 (2019)](https://doi.org/10.1103/PhysRevD.99.094024)
+11. [G. Comitini, arXiv:1910.13022 (2019)](https://arxiv.org/abs/1910.13022)
+12. [F. Siringo, Phys. Rev. D 100, 074014 (2019)](https://doi.org/10.1103/PhysRevD.100.074014)
+13. [G. Comitini and F. Siringo, Phys. Rev. D 102, 094002 (2020)](https://doi.org/10.1103/PhysRevD.102.094002)
+14. [F. Siringo and G. Comitini, Phys. Rev. D 103, 074014 (2021)](https://doi.org/10.1103/PhysRevD.103.074014)
+15. [G. Comitini, D. Rizzo, M. Battello, and F. Siringo, Phys. Rev. D 104, 074020 (2021)](https://doi.org/10.1103/PhysRevD.104.074020)
