@@ -181,7 +181,7 @@ Modulo a factor of :math:`M\frac{\alpha_{s}}{\pi}`.
 """
     res=quark_t(s,x)/s*log(quark_R(s,x))-(quark_t(s,x)+s-x+1)/(2*s)*log(x)+log(x)
     if xi != 0:
-        res *=xi/3*(2-(s+x)/s*log((s+x)/x))
+        res +=xi/3*(2-(s+x)/s*log((s+x)/x))
     return res
 
 def dquark_SigV1(s, x = oneloop_settings.x, xi = settings.xi):
@@ -194,7 +194,7 @@ def dquark_SigV1(s, x = oneloop_settings.x, xi = settings.xi):
     p12=quark_CR(s,x)/quark_R(s,x)*dquark_R(s,x)-quark_Cxs(s,x)/(x+s)
     res = p11 + p12
     if xi != 0:
-        res += -xi*(2*x/s**2-1/s-2*x/s**3*log((s+x)/x))
+        res += -xi*(2*x/s**2-1/s-2*x**2/s**3*log((s+x)/x))
     return res
 
 def dquark_SigV1dx(s, x = oneloop_settings.x, xi = settings.xi):

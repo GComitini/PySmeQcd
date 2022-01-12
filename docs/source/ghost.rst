@@ -68,8 +68,8 @@ The one-loop ghost dressing function, propagator and spectral function
 
 .. _ghost_gf:
 
-Graphical functions
--------------------
+Plots
+-----
 
 .. autofunction:: PySmeQcd.oneloop.ghost.ghost_chi_plot
 

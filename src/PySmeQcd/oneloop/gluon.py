@@ -142,7 +142,7 @@ def dgluon_J_inv(s, x = oneloop_settings.x, N = settings.N, xi = settings.xi, Nf
 """
     res = dgluon_F(s)
     if xi != 0:
-        res += xi*dgluon_F_xi(s,xi)
+        res += xi*dgluon_F_xi(s)
     if Nf != 0:
         res += Nf*dgluon_F_Q(s,x,N)
         if type == "cr":
@@ -570,7 +570,7 @@ Modulo a factor of :math:`\alpha^{-1}`.
         xlbl = r"$p^{2}$"
         ylbl =r"$\rho_{\Delta}(p^{2})$"
     else:
-        Y=[gluon_spectral(ss,x,N,xi,F0,Nf,type,False,Z,mu0,False,m) for p2 in X]
+        Y=[gluon_spectral(ss,x,N,xi,F0,Nf,type,False,Z,mu0,False,m) for ss in X]
         xlbl = r"$p^{2}/m^{2}$"
         ylbl =r"$m^{2}\,\rho_{\Delta}(p^{2}/m^{2})$"
     if ren:

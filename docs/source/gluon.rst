@@ -94,8 +94,8 @@ Poles and residues
 
 .. _gluon_gf:
 
-Graphical functions
--------------------
+Plots
+-----
 
 .. autofunction:: PySmeQcd.oneloop.gluon.gluon_J_plot
 

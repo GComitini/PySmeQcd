@@ -198,8 +198,8 @@ Poles and residues
 
 .. _quark_gf:
 
-Graphical functions
--------------------
+Plots
+-----
 
 .. autofunction:: PySmeQcd.oneloop.quark.quark_Z_plot
 
