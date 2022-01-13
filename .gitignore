@@ -15,6 +15,7 @@ docs/build/
 
 # Backups
 *~
+.*.swp
 
 # Personal
 src/PySmeQcd/oneloop/gaugeopt
