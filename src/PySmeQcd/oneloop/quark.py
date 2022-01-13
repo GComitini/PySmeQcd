@@ -297,17 +297,16 @@ Modulo a factor of :math:`\frac{\alpha_{s}}{3\pi}`.
 """
     if type != 'cc':
         res = quark_SigV2(s,x,xi)
-        if type=='vw':
+        if type == 'vw':
             res += quark_SigVgl(s,x,xi)
         return res
     else:
         res = (exp(1j*phi)*quark_SigV2(s/p02,x/p02,xi)+exp(-1j*phi)*quark_SigV2(s/conjugate(p02),x/conjugate(p02),xi))/(2*cos(phi))
         if Zglue != 1:
             res *= Zglue
-        if s.imag == 0:
+        if isinstance(s,(int,float)) or (isinstance(s,complex) and s.imag == 0):
             return res.real
-        else:
-            return res
+        return res
 
 def quark_SigS(s, x = oneloop_settings.x, xi = settings.xi, type = oneloop_settings.quarktype,
     p02 = oneloop_settings.p02, phi = oneloop_settings.phi, Zglue = oneloop_settings.Zglue):
@@ -331,10 +330,9 @@ Modulo a factor of :math:`M\frac{\alpha_{s}}{\pi}`.
         res = (exp(1j*phi)*quark_SigS2(s/p02,x/p02,xi)+exp(-1j*phi)*quark_SigS2(s/conjugate(p02),x/conjugate(p02),xi))/(2*cos(phi))
         if Zglue != 1:
             res *= Zglue
-        if s.imag == 0:
+        if isinstance(s,(int,float)) or (isinstance(s,complex) and s.imag == 0):
             return res.real
-        else:
-            return res
+        return res
 
 
 #--- One-loop quark propagator ---#
@@ -424,7 +422,7 @@ def quark_M(s, K0 = oneloop_settings.K0, H0 = oneloop_settings.H0, x = oneloop_s
 def quark_Q(s, K0 = oneloop_settings.K0, H0 = oneloop_settings.H0, x = oneloop_settings.x, xi = settings.xi,
     type = oneloop_settings.quarktype, p02 = oneloop_settings.p02, phi = oneloop_settings.phi, Zglue = oneloop_settings.Zglue,
     dimensionful = False, m = oneloop_settings.m):
-    r"""Function :math:`p^{2}+\mathcal{M}^{2}(p^{2})`.
+    r"""Function :math:`Q(p^{2})`.
 
 :param K0: normalized and adimensionalized quark bare mass :math:`K_{0}/M`
 :param H0: additive renormalization constant :math:`H_{0}`
@@ -738,7 +736,7 @@ Modulo a factor of :math:`\frac{3\pi}{\alpha_{s}}`.
 
 
 #--- Plots ---#
-def quark_Z_plot(s = [0,25], N_s = 1000, H0 = oneloop_settings.H0, x = oneloop_settings.x,
+def quark_Z_plot(s = [1E-3,25], N_s = 1000, H0 = oneloop_settings.H0, x = oneloop_settings.x,
     xi = settings.xi, type = oneloop_settings.quarktype, ren = True, Z = None, mu0 = settings.mu0,
     p02 = oneloop_settings.p02, phi = oneloop_settings.phi, Zglue = oneloop_settings.Zglue, dimensionful = False, m = oneloop_settings.m,
     scale = "log", title = True, outf = None):
@@ -765,8 +763,13 @@ Modulo a factor of :math:`\frac{3\pi}{\alpha_{s}}`.
 :param outf: if not :python:`None`, save the output to the file specified by :python:`outf` rather than printing it out
 """
     from matplotlib import pyplot as plt
-    ds = (s[1]-s[0])/N_s
-    X=[s[0]+ds*k for k in range(N_s+1) if s[0]+ds*k!=0]
+    if scale == 'log':
+        from numpy import log10
+        ds = (log10(s[1])-log10(s[0]))/N_s
+        X=[10**(log10(s[0])+ds*k) for k in range(N_s+1)]
+    else:
+        ds = (s[1]-s[0])/N_s
+        X=[s[0]+ds*k for k in range(N_s+1) if s[0]+ds*k!=0]
     Y=[quark_Z(ss,H0,x,xi,type,False,Z,mu0,p02,phi,Zglue,dimensionful,m) for ss in X]
     if ren:
         if Z == None:
@@ -791,7 +794,7 @@ Modulo a factor of :math:`\frac{3\pi}{\alpha_{s}}`.
     else:
         plt.savefig(outf)
 
-def quark_M_plot(s = [0,25], N_s = 1000, K0 = oneloop_settings.K0, H0 = oneloop_settings.H0,
+def quark_M_plot(s = [1E-3,25], N_s = 1000, K0 = oneloop_settings.K0, H0 = oneloop_settings.H0,
     x = oneloop_settings.x, xi = settings.xi, type = oneloop_settings.quarktype, p02 = oneloop_settings.p02,
     phi = oneloop_settings.phi, Zglue = oneloop_settings.Zglue, dimensionful = False, m = oneloop_settings.m,
     scale = "log", title = True, outf = None):
@@ -814,8 +817,13 @@ def quark_M_plot(s = [0,25], N_s = 1000, K0 = oneloop_settings.K0, H0 = oneloop_
 :param outf: if not :python:`None`, save the output to the file specified by :python:`outf` rather than printing it out
 """
     from matplotlib import pyplot as plt
-    ds = (s[1]-s[0])/N_s
-    X=[s[0]+ds*k for k in range(N_s+1) if s[0]+ds*k!=0]
+    if scale == 'log':
+        from numpy import log10
+        ds = (log10(s[1])-log10(s[0]))/N_s
+        X=[10**(log10(s[0])+ds*k) for k in range(N_s+1)]
+    else:
+        ds = (s[1]-s[0])/N_s
+        X=[s[0]+ds*k for k in range(N_s+1) if s[0]+ds*k!=0]
     Y=[quark_M(ss,K0,H0,x,xi,type,p02,phi,Zglue,dimensionful,m) for ss in X]
     if dimensionful:
         xlbl = r"$p^{2}$"
@@ -836,7 +844,197 @@ def quark_M_plot(s = [0,25], N_s = 1000, K0 = oneloop_settings.K0, H0 = oneloop_
     else:
         plt.savefig(outf)
 
-def quark_propV_plot(s = [0,25], N_s = 1000, K0 = oneloop_settings.K0, H0 = oneloop_settings.H0,
+def quark_Q_inv_plot(s = [1E-3,25], N_s = 1000, K0 = oneloop_settings.K0, H0 = oneloop_settings.H0,
+    x = oneloop_settings.x, xi = settings.xi, type = oneloop_settings.quarktype,
+    p02 = oneloop_settings.p02, phi = oneloop_settings.phi, Zglue = oneloop_settings.Zglue,
+    inverse = False, dimensionful = False, m = oneloop_settings.m,
+    scale = "log", title = True, outf = None):
+    r"""Plots the quark :math:`Q^{-1}` function in Euclidean space.
+
+:param s: a two-element list containing the minimum and maximum momentum squared for the plot (see below for dimensions)
+:param N_s: an integer specifying the number of plot points
+:param K0: normalized and adimensionalized quark bare mass :math:`K_{0}/M`
+:param H0: additive renormalization constant :math:`H_{0}`
+:param x: adimensional quark chiral mass squared :math:`x`
+:param xi: gauge parameter :math:`\xi`
+:param type: diagram selector: :python:`'ms'` if only the ordinary and quark-crossed loops are included, :python:`'vw'` if also the gluon-crossed loop is included; :python:`'cc'` for the c.c. scheme
+:param p02: pole of the gluon propagator in Minkowski space (c.c. scheme only)
+:param phi: phase :math:`\varphi` of the residue of the gluon propagator at the pole :python:`p02` (c.c. scheme only)
+:param Zglue: renormalization factor for the internal gluon line (c.c. scheme only)
+:param inverse: if :python:`True`, plot :math:`Q(p^{2})`
+:param dimensionful: if :python:`False`, adimensionalize the function by multiplying it by :python:`m`\ :sup:`2`; if :python:`True`, :python:`s` is the dimensionful momentum squared :math:`p^{2}`
+:param m: gluon mass parameter :math:`m` (only if :python:`dimensionful=True`)
+:param scale: if set to :python:`'log'`, switch to a log-lin scale
+:param title: if :python:`True`, show a title for the plot
+:param outf: if not :python:`None`, save the output to the file specified by :python:`outf` rather than printing it out
+"""
+    from matplotlib import pyplot as plt
+    if scale == 'log':
+        from numpy import log10
+        ds = (log10(s[1])-log10(s[0]))/N_s
+        X=[10**(log10(s[0])+ds*k) for k in range(N_s+1)]
+    else:
+        ds = (s[1]-s[0])/N_s
+        X=[s[0]+ds*k for k in range(N_s+1) if s[0]+ds*k!=0]
+    if inverse:
+        Y=[quark_Q(ss,K0,H0,x,xi,type,p02,phi,Zglue,dimensionful,m) for ss in X]
+        if dimensionful:
+            ylbl = r"$Q(p^{2})$"
+            xlbl = r"$p^{2}$"
+        else:
+            ylbl = r"$Q(p^{2}/m^{2})/m^{2}$"
+            xlbl = r"$p^{2}/m^{2}$"
+    else:
+        Y=[1/quark_Q(ss,K0,H0,x,xi,type,p02,phi,Zglue,dimensionful,m) for ss in X]
+        if dimensionful:
+            ylbl = r"$Q^{-1}(p^{2})$"
+            xlbl = r"$p^{2}$"
+        else:
+            ylbl = r"$m^{2}Q^{-1}(p^{2}/m^{2})$"
+            xlbl = r"$p^{2}/m^{2}$"
+    plt.figure()
+    plt.plot(X,Y)
+    if scale=="log":
+        plt.xscale("log")
+    if title:
+        if inverse:
+            plt.title(r"Quark $Q$ function")
+        else:
+            plt.title(r"Quark $Q^{-1}$ function")
+    plt.xlabel(xlbl)
+    plt.ylabel(ylbl)
+    if outf == None:
+        plt.show(block=False)
+    else:
+        plt.savefig(outf)
+
+def quark_Q_contour(s_real = [-3,1], s_imag = [-1,1], N_s_real = 500, N_s_imag = 500,
+    K0 = oneloop_settings.K0, H0 = oneloop_settings.H0, x = oneloop_settings.x,
+    xi = settings.xi, type = oneloop_settings.quarktype, p02 = oneloop_settings.p02,
+    phi = oneloop_settings.phi, Zglue = oneloop_settings.Zglue, dimensionful = False,
+    m = oneloop_settings.m, title = True, outf = None):
+    r"""Plots the zeroes of the real and imaginary part of the quark :math:`Q` function.
+
+:param s_real: a two-element list containing the minimum and maximum real part of the momentum squared for the plot (see below for dimensions)
+:param s_imag: a two-element list containing the minimum and maximum imaginary part of the momentum squared for the plot (see below for dimensions)
+:param N_s_real: an integer specifying the number of subdivisions in the real direction
+:param N_s_imag: an integer specifying the number of subdivisions in the imaginary direction
+:param K0: normalized and adimensionalized quark bare mass :math:`K_{0}/M`
+:param H0: additive renormalization constant :math:`H_{0}`
+:param x: adimensional quark chiral mass squared :math:`x`
+:param xi: gauge parameter :math:`\xi`
+:param type: diagram selector: :python:`'ms'` if only the ordinary and quark-crossed loops are included, :python:`'vw'` if also the gluon-crossed loop is included; :python:`'cc'` for the c.c. scheme
+:param p02: pole of the gluon propagator in Minkowski space (c.c. scheme only)
+:param phi: phase :math:`\varphi` of the residue of the gluon propagator at the pole :python:`p02` (c.c. scheme only)
+:param Zglue: renormalization factor for the internal gluon line (c.c. scheme only)
+:param dimensionful: if :python:`True`, :python:`s_real` and :python:`s_imag` are the real and imaginary parts of the dimensionful momentum squared :math:`p^{2}`
+:param m: gluon mass parameter :math:`m` (only if :python:`dimensionful=True`)
+:param title: if :python:`True`, show a title for the plot
+:param outf: if not :python:`None`, save the output to the file specified by :python:`outf` rather than printing it out
+"""
+    from matplotlib import pyplot as plt
+    ds_real = (s_real[1]-s_real[0])/N_s_real
+    ds_imag = (s_imag[1]-s_imag[0])/N_s_imag
+    X=[s_real[0]+ds_real*k for k in range(N_s_real+1)]
+    Y=[s_imag[0]+ds_imag*k for k in range(N_s_imag+1) if s_imag[0]+ds_imag*k != 0]
+    ZZ=[[quark_Q((sr+si*1j),K0,H0,x,xi,type,p02,phi,Zglue,dimensionful,m) for sr in X] for si in Y]
+    ZR=[[el0.real for el0 in el] for el in ZZ]
+    ZI=[[el0.imag for el0 in el] for el in ZZ]
+    if dimensionful:
+        xlbl = r"$\mathrm{Re}(p^{2})$"
+        ylbl = r"$\mathrm{Im}(p^{2})$"
+    else:
+        xlbl = r"$\mathrm{Re}(p^{2}/m^{2})$"
+        ylbl = r"$\mathrm{Im}(p^{2}/m^{2})$"
+    plt.figure()
+    plt.contour(X,Y,ZR,[0],colors="green")
+    plt.contour(X,Y,ZI,[0],colors="gold")
+    if title:
+        plt.title(r"Zero set of the quark $Q$ function")
+    plt.xlabel(xlbl)
+    plt.ylabel(ylbl)
+    if outf==None:
+        plt.show(block=False)
+    else:
+        plt.savefig(outf)
+
+def quark_Q_inv_3D_plot(value = "abs", s_real = [-3,1], s_imag = [-1,1], N_s_real = 1000,
+    N_s_imag = 1000, K0 = oneloop_settings.K0, H0 = oneloop_settings.H0,
+    x = oneloop_settings.x, xi = settings.xi, type = oneloop_settings.quarktype,
+    p02 = oneloop_settings.p02, phi = oneloop_settings.phi, Zglue = oneloop_settings.Zglue,
+    inverse = False, dimensionful = False, m = oneloop_settings.m,
+    title = True, outf = None):
+    r"""Plots the quark :math:`Q^{-1}` function in the complex plane (3D plot).
+
+:param value: if :python:`'abs'`, plot the absolute value; if :python:`'real'`, plot the real part; if :python:`'imag'`, plot the imaginary part
+:param s_real: a two-element list containing the minimum and maximum real part of the momentum squared for the plot (see below for dimensions)
+:param s_imag: a two-element list containing the minimum and maximum imaginary part of the momentum squared for the plot (see below for dimensions)
+:param N_s_real: an integer specifying the number of subdivisions in the real direction
+:param N_s_imag: an integer specifying the number of subdivisions in the imaginary direction
+:param K0: normalized and adimensionalized quark bare mass :math:`K_{0}/M`
+:param H0: additive renormalization constant :math:`H_{0}`
+:param x: adimensional quark chiral mass squared :math:`x`
+:param xi: gauge parameter :math:`\xi`
+:param type: diagram selector: :python:`'ms'` if only the ordinary and quark-crossed loops are included, :python:`'vw'` if also the gluon-crossed loop is included; :python:`'cc'` for the c.c. scheme
+:param p02: pole of the gluon propagator in Minkowski space (c.c. scheme only)
+:param phi: phase :math:`\varphi` of the residue of the gluon propagator at the pole :python:`p02` (c.c. scheme only)
+:param Zglue: renormalization factor for the internal gluon line (c.c. scheme only)
+:param inverse: if :python:`True`, plot :math:`Q(p^{2})`
+:param dimensionful: if :python:`False`, adimensionalize the function by multiplying it by :python:`m`\ :sup:`2`; if :python:`True`, :python:`s` is the dimensionful momentum squared :math:`p^{2}`
+:param m: gluon mass parameter :math:`m` (only if :python:`dimensionful=True`)
+:param title: if :python:`True`, show a title for the plot
+:param outf: if not :python:`None`, save the output to the file specified by :python:`outf` rather than printing it out
+"""
+    from numpy import array, meshgrid
+    from matplotlib import pyplot as plt
+    from mpl_toolkits.mplot3d import Axes3D
+    ds_real = (s_real[1]-s_real[0])/N_s_real
+    ds_imag = (s_imag[1]-s_imag[0])/N_s_imag
+    X=array([s_real[0]+ds_real*k for k in range(N_s_real+1)])
+    Y=array([s_imag[0]+ds_imag*k for k in range(N_s_imag+1) if s_imag[0]+ds_imag*k != 0])
+    X,Y= meshgrid(X,Y)
+    if inverse:
+        ZZ = quark_Q((X+Y*1j),K0,H0,x,xi,type,p02,phi,Zglue,dimensionful,m)
+        if dimensionful:
+            xlbl = r"$\mathrm{Re}(p^{2})$"
+            ylbl = r"$\mathrm{Im}(p^{2})$"
+        else:
+            xlbl = r"$\mathrm{Re}(p^{2}/m^{2})$"
+            ylbl = r"$\mathrm{Im}(p^{2}/m^{2})$"
+        tt = r"Quark $Q$ function"
+    else:
+        ZZ = 1/quark_Q((X+Y*1j),K0,H0,x,xi,type,p02,phi,Zglue,dimensionful,m)
+        if dimensionful:
+            xlbl = r"$\mathrm{Re}(p^{2})$"
+            ylbl = r"$\mathrm{Im}(p^{2})$"
+        else:
+            xlbl = r"$\mathrm{Re}(p^{2}/m^{2})$"
+            ylbl = r"$\mathrm{Im}(p^{2}/m^{2})$"
+        tt = r"Quark $Q^{-1}$ function"
+    if value=="abs":
+        ZZ=abs(ZZ)
+    elif value=="real":
+        ZZ=ZZ.real
+    elif value=="imag":
+        ZZ=ZZ.imag
+    ax = plt.axes(projection='3d')
+    ax.plot_surface(X,Y,ZZ)
+    if value=="abs":
+        ax.set_zlim(-0.1, 4)
+    elif value in ["real","imag"]:
+        ax.set_zlim(-4, 4)
+    Z0=0*X
+    ax.plot_surface(X,Y,Z0,alpha=0.5,color="grey")
+    if title:
+        plt.title(tt)
+    plt.xlabel(xlbl)
+    plt.ylabel(ylbl)
+    if outf==None:
+        plt.show(block=False)
+    else:
+        plt.savefig(outf)
+
+def quark_propV_plot(s = [1E-3,25], N_s = 1000, K0 = oneloop_settings.K0, H0 = oneloop_settings.H0,
     x = oneloop_settings.x, xi = settings.xi, type = oneloop_settings.quarktype,
     ren = True, Z = None, mu0 = settings.mu0, p02 = oneloop_settings.p02,
     phi = oneloop_settings.phi, Zglue = oneloop_settings.Zglue, dimensionful = False,
@@ -865,8 +1063,13 @@ Modulo a factor of :math:`\frac{3\pi}{\alpha_{s}}`.
 :param outf: if not :python:`None`, save the output to the file specified by :python:`outf` rather than printing it out
 """
     from matplotlib import pyplot as plt
-    ds = (s[1]-s[0])/N_s
-    X=[(s[0]+ds*k) for k in range(N_s+1) if s[0]+ds*k!=0]
+    if scale == 'log':
+        from numpy import log10
+        ds = (log10(s[1])-log10(s[0]))/N_s
+        X=[10**(log10(s[0])+ds*k) for k in range(N_s+1)]
+    else:
+        ds = (s[1]-s[0])/N_s
+        X=[s[0]+ds*k for k in range(N_s+1) if s[0]+ds*k!=0]
     Y=[quark_propV(ss,K0,H0,x,xi,type,False,Z,mu0,p02,phi,Zglue,dimensionful,m) for ss in X]
     if ren:
         if Z == None:
@@ -891,7 +1094,7 @@ Modulo a factor of :math:`\frac{3\pi}{\alpha_{s}}`.
     else:
         plt.savefig(outf)
 
-def quark_propS_plot(s = [0,25], N_s = 1000, K0 = oneloop_settings.K0, H0 = oneloop_settings.H0,
+def quark_propS_plot(s = [1E-3,25], N_s = 1000, K0 = oneloop_settings.K0, H0 = oneloop_settings.H0,
     x = oneloop_settings.x, xi = settings.xi, type = oneloop_settings.quarktype,
     ren = True, Z = None, mu0 = settings.mu0, p02 = oneloop_settings.p02,
     phi = oneloop_settings.phi, Zglue = oneloop_settings.Zglue, dimensionful = False,
@@ -920,8 +1123,13 @@ Modulo a factor of :math:`\frac{3\pi}{\alpha_{s}}`.
 :param outf: if not :python:`None`, save the output to the file specified by :python:`outf` rather than printing it out
 """
     from matplotlib import pyplot as plt
-    ds = (s[1]-s[0])/N_s
-    X=[(s[0]+ds*k) for k in range(N_s+1) if s[0]+ds*k!=0]
+    if scale == 'log':
+        from numpy import log10
+        ds = (log10(s[1])-log10(s[0]))/N_s
+        X=[10**(log10(s[0])+ds*k) for k in range(N_s+1)]
+    else:
+        ds = (s[1]-s[0])/N_s
+        X=[s[0]+ds*k for k in range(N_s+1) if s[0]+ds*k!=0]
     Y=[quark_propS(ss,K0,H0,x,xi,type,False,Z,mu0,p02,phi,Zglue,dimensionful,m) for ss in X]
     if ren:
         if Z == None:
@@ -946,7 +1154,7 @@ Modulo a factor of :math:`\frac{3\pi}{\alpha_{s}}`.
     else:
         plt.savefig(outf)
 
-def quark_spectralV_plot(s = [0,25], N_s = 1000, K0 = oneloop_settings.K0, H0 = oneloop_settings.H0,
+def quark_spectralV_plot(s = [1E-3,25], N_s = 1000, K0 = oneloop_settings.K0, H0 = oneloop_settings.H0,
     x = oneloop_settings.x, xi = settings.xi, type = oneloop_settings.quarktype,
     ren = True, Z = None, mu0 = settings.mu0, p02 = oneloop_settings.p02,
     phi = oneloop_settings.phi, Zglue = oneloop_settings.Zglue, dimensionful = False,
@@ -975,8 +1183,13 @@ Modulo a factor of :math:`\frac{3\pi}{\alpha_{s}}`.
 :param outf: if not :python:`None`, save the output to the file specified by :python:`outf` rather than printing it out
 """
     from matplotlib import pyplot as plt
-    ds = (s[1]-s[0])/N_s
-    X=[(s[0]+ds*k) for k in range(N_s+1) if s[0]+ds*k!=0]
+    if scale == 'log':
+        from numpy import log10
+        ds = (log10(s[1])-log10(s[0]))/N_s
+        X=[10**(log10(s[0])+ds*k) for k in range(N_s+1)]
+    else:
+        ds = (s[1]-s[0])/N_s
+        X=[s[0]+ds*k for k in range(N_s+1) if s[0]+ds*k!=0]
     Y=[quark_spectralV(ss,K0,H0,x,xi,type,False,Z,mu0,p02,phi,Zglue,dimensionful,m) for ss in X]
     if ren:
         if Z == None:
@@ -1001,7 +1214,7 @@ Modulo a factor of :math:`\frac{3\pi}{\alpha_{s}}`.
     else:
         plt.savefig(outf)
 
-def quark_spectralS_plot(s = [0,25], N_s = 1000, K0 = oneloop_settings.K0, H0 = oneloop_settings.H0,
+def quark_spectralS_plot(s = [1E-3,25], N_s = 1000, K0 = oneloop_settings.K0, H0 = oneloop_settings.H0,
     x = oneloop_settings.x, xi = settings.xi, type = oneloop_settings.quarktype,
     ren = True, Z = None, mu0 = settings.mu0, p02 = oneloop_settings.p02,
     phi = oneloop_settings.phi, Zglue = oneloop_settings.Zglue, dimensionful = False,
@@ -1030,8 +1243,13 @@ Modulo a factor of :math:`\frac{3\pi}{\alpha_{s}}`.
 :param outf: if not :python:`None`, save the output to the file specified by :python:`outf` rather than printing it out
 """
     from matplotlib import pyplot as plt
-    ds = (s[1]-s[0])/N_s
-    X=[(s[0]+ds*k) for k in range(N_s+1) if s[0]+ds*k!=0]
+    if scale == 'log':
+        from numpy import log10
+        ds = (log10(s[1])-log10(s[0]))/N_s
+        X=[10**(log10(s[0])+ds*k) for k in range(N_s+1)]
+    else:
+        ds = (s[1]-s[0])/N_s
+        X=[s[0]+ds*k for k in range(N_s+1) if s[0]+ds*k!=0]
     Y=[quark_spectralS(ss,K0,H0,x,xi,type,False,Z,mu0,p02,phi,Zglue,dimensionful,m) for ss in X]
     if ren:
         if Z == None:

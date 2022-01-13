@@ -18,8 +18,8 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 #import pathlib
-# import os, sys
-# sys.path.insert(0, os.path.abspath('../../src'))
+#import os, sys
+#sys.path.insert(0, os.path.abspath('../../src'))
 import PySmeQcd
 
 
@@ -30,8 +30,8 @@ copyright = '2022, Giorgio Comitini'
 author = 'Giorgio Comitini'
 
 # The full version, including alpha/beta/rc tags
-release = '1.0.1-alpha'
-version = '1.0'
+release = '1.1.0-alpha'
+version = '1.1'
 
 
 # -- General configuration ---------------------------------------------------

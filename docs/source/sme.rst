@@ -247,11 +247,18 @@ To one loop, the following quantities are often used in place of :math:`Z_{\psi}
 
   H_{0}=3\pi Z_{\psi}/\alpha_{s}\ ,\qquad K_{0}=\pi M_{B} Z_{\psi}/\alpha_{s}\ .
 
+The function :math:`p^{2}+\mathcal{M}^{2}(p^{2})` is also denoted by :math:`Q(p^{2})`,
+
+.. math::
+
+  Q(p^{2})=p^{2}+\mathcal{M}^{2}(p^{2})\ .
+
 The vector and scalar components of the functions :math:`\Sigma^{(1)}(p^{2})`,
 :math:`\Sigma^{(2)}(p^{2})` and :math:`\Sigma^{(gl)}(p^{2})` are defined
 in the module :python:`PySmeQcd.oneloop.quark`, together with the functions
 :math:`A(p^{2})`, :math:`B(p^{2})`, :math:`Z(p^{2})`, :math:`\mathcal{M}(p^{2})`,
-the vector and scalar components :math:`S_{V/S}(p^{2})` of the quark propagator,
+:math:`Q(p^{2})`, the vector and scalar components :math:`S_{V/S}(p^{2})` of
+the quark propagator,
 
 .. math::
 

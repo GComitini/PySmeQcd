@@ -129,7 +129,7 @@ Modulo a factor of :math:`\alpha^{-1}`. The :math:`\varepsilon` for the differen
 
 
 ###--- Plots ---###
-def ghost_chi_plot(s = [0,25], N_s = 1000, xi = settings.xi, G0 = oneloop_settings.G0,
+def ghost_chi_plot(s = [1E-3,25], N_s = 1000, xi = settings.xi, G0 = oneloop_settings.G0,
     inverse = False, ren = True, Z = None, mu0 = settings.mu0, dimensionful = False,
     m = oneloop_settings.m, scale = "log", title = False, outf = None):
     r"""Plots the ghost dressing function in Euclidean space.
@@ -151,8 +151,13 @@ Modulo a factor of :math:`\alpha^{-1}`.
 :param outf: if not :python:`None`, save the output to the file specified by :python:`outf` rather than printing it out
 """
     from matplotlib import pyplot as plt
-    ds = (s[1]-s[0])/N_s
-    X=[s[0]+ds*k for k in range(N_s+1) if s[0]+ds*k!=0]
+    if scale == 'log':
+        from numpy import log10
+        ds = (log10(s[1])-log10(s[0]))/N_s
+        X=[10**(log10(s[0])+ds*k) for k in range(N_s+1)]
+    else:
+        ds = (s[1]-s[0])/N_s
+        X=[s[0]+ds*k for k in range(N_s+1) if s[0]+ds*k!=0]
     if inverse:
         if dimensionful:
             m2 = m**2
@@ -197,7 +202,7 @@ Modulo a factor of :math:`\alpha^{-1}`.
     else:
         plt.savefig(outf)
 
-def ghost_prop_plot(s = [0,25], N_s = 1000, xi = settings.xi, G0 = oneloop_settings.G0,
+def ghost_prop_plot(s = [1E-3,25], N_s = 1000, xi = settings.xi, G0 = oneloop_settings.G0,
     ren = True, Z = None, mu0 = settings.mu0, dimensionful = False, m = oneloop_settings.m,
     scale = "log", title = False, outf = None):
     r"""Plots the ghost propagator in Euclidean space.
@@ -218,8 +223,13 @@ Modulo a factor of :math:`\alpha^{-1}`.
 :param outf: if not :python:`None`, save the output to the file specified by :python:`outf` rather than printing it out
 """
     from matplotlib import pyplot as plt
-    ds = (s[1]-s[0])/N_s
-    X=[s[0]+ds*k for k in range(N_s+1) if s[0]+ds*k!=0]
+    if scale == 'log':
+        from numpy import log10
+        ds = (log10(s[1])-log10(s[0]))/N_s
+        X=[10**(log10(s[0])+ds*k) for k in range(N_s+1)]
+    else:
+        ds = (s[1]-s[0])/N_s
+        X=[s[0]+ds*k for k in range(N_s+1) if s[0]+ds*k!=0]
     if dimensionful:
         m2 = m**2
         Y=[1/(ss*ghost_chi_inv(ss/m2,xi,G0)) for ss in X]
@@ -246,7 +256,7 @@ Modulo a factor of :math:`\alpha^{-1}`.
     else:
         plt.savefig(outf)
 
-def ghost_spectral_plot(s = [0,25], N_s = 1000, xi = settings.xi, G0 = oneloop_settings.G0,
+def ghost_spectral_plot(s = [1E-3,25], N_s = 1000, xi = settings.xi, G0 = oneloop_settings.G0,
     ren = True, Z = None, mu0 = settings.mu0, dimensionful = False, m = oneloop_settings.m,
     scale = "log", title = False, outf = None):
     r"""Plots the ghost spectral function in Minkowski space.
@@ -267,8 +277,13 @@ Modulo a factor of :math:`\alpha^{-1}`.
 :param outf: if not :python:`None`, save the output to the file specified by :python:`outf` rather than printing it out
 """
     from matplotlib import pyplot as plt
-    ds = (s[1]-s[0])/N_s
-    X=[s[0]+ds*k for k in range(N_s+1) if s[0]+ds*k!=0]
+    if scale == 'log':
+        from numpy import log10
+        ds = (log10(s[1])-log10(s[0]))/N_s
+        X=[10**(log10(s[0])+ds*k) for k in range(N_s+1)]
+    else:
+        ds = (s[1]-s[0])/N_s
+        X=[s[0]+ds*k for k in range(N_s+1) if s[0]+ds*k!=0]
     if dimensionful:
         m2=m**2
         Y=[ghost_spectral(ss/m2,xi,G0,False,Z,mu0,False,m)/m2 for ss in X]

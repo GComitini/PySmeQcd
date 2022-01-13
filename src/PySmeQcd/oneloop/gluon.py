@@ -269,7 +269,7 @@ Modulo a factor of :math:`\alpha^{-1}`.
 
 
 #--- Plots ---#
-def gluon_J_plot(s = [0,25], N_s = 1000, x = oneloop_settings.x, N = settings.N, xi = settings.xi,
+def gluon_J_plot(s = [1E-3,25], N_s = 1000, x = oneloop_settings.x, N = settings.N, xi = settings.xi,
     F0 = oneloop_settings.F0, Nf = settings.Nf, type = oneloop_settings.gluetype, inverse = False,
     ren = True, Z = None, mu0 = settings.mu0, dimensionful = False, m = oneloop_settings.m,
     scale = "log", title = True, outf = None):
@@ -296,8 +296,13 @@ Modulo a factor of :math:`\alpha^{-1}`.
 :param outf: if not :python:`None`, save the output to the file specified by :python:`outf` rather than printing it out
 """
     from matplotlib import pyplot as plt
-    ds = (s[1]-s[0])/N_s
-    X=[s[0]+ds*k for k in range(N_s+1) if s[0]+ds*k!=0]
+    if scale == 'log':
+        from numpy import log10
+        ds = (log10(s[1])-log10(s[0]))/N_s
+        X=[10**(log10(s[0])+ds*k) for k in range(N_s+1)]
+    else:
+        ds = (s[1]-s[0])/N_s
+        X=[s[0]+ds*k for k in range(N_s+1) if s[0]+ds*k!=0]
     if inverse:
         if dimensionful:
             m2 = m**2
@@ -369,22 +374,20 @@ def gluon_J_inv_contour(s_real = [-5,3], s_imag = [-4,4], N_s_real = 500, N_s_im
     Y=[s_imag[0]+ds_imag*k for k in range(N_s_imag+1) if s_imag[0]+ds_imag*k != 0]
     if dimensionful:
         m2 = m**2
-        ZR=[[(gluon_J_inv((sr+si*1j)/m2,x,N,xi,F0,Nf,type)).real for sr in X] for si in Y]
-        ZI=[[(gluon_J_inv((sr+si*1j)/m2,x,N,xi,F0,Nf,type)).imag for sr in X] for si in Y]
+        ZZ=[[gluon_J_inv((sr+si*1j)/m2,x,N,xi,F0,Nf,type) for sr in X] for si in Y]
         xlbl = r"$\mathrm{Re}(p^{2})$"
         ylbl = r"$\mathrm{Im}(p^{2})$"
-        tt = r"Zero set of $J^{-1}(p^{2})$"
     else:
-        ZR=[[(gluon_J_inv(sr+si*1j,x,N,xi,F0,Nf,type)).real for sr in X] for si in Y]
-        ZI=[[(gluon_J_inv(sr+si*1j,x,N,xi,F0,Nf,type)).imag for sr in X] for si in Y]
+        ZZ=[[gluon_J_inv(sr+si*1j,x,N,xi,F0,Nf,type) for sr in X] for si in Y]
         xlbl = r"$\mathrm{Re}(p^{2}/m^{2})$"
         ylbl = r"$\mathrm{Im}(p^{2}/m^{2})$"
-        tt = r"Zero set of the inverse gluon dressing function"
+    ZR=[[el0.real for el0 in el] for el in ZZ]
+    ZI=[[el0.imag for el0 in el] for el in ZZ]
     plt.figure()
     plt.contour(X,Y,ZR,[0],colors="green")
     plt.contour(X,Y,ZI,[0],colors="gold")
     if title:
-        plt.title(tt)
+        plt.title(r"Zero set of the inverse gluon dressing function")
     plt.xlabel(xlbl)
     plt.ylabel(ylbl)
     if outf==None:
@@ -482,7 +485,7 @@ Modulo a factor of :math:`\alpha^{-1}`.
     else:
         plt.savefig(outf)
 
-def gluon_prop_plot(s = [0,25], N_s = 1000, x = oneloop_settings.x, N = settings.N,
+def gluon_prop_plot(s = [1E-3,25], N_s = 1000, x = oneloop_settings.x, N = settings.N,
     xi = settings.xi, F0 = oneloop_settings.F0, Nf = settings.Nf, type = oneloop_settings.gluetype,
     ren = True, Z = None, mu0 = settings.mu0, dimensionful = False, m = oneloop_settings.m,
     scale = "log", title = True, outf = None):
@@ -508,8 +511,13 @@ Modulo a factor of :math:`\alpha^{-1}`.
 :param outf: if not :python:`None`, save the output to the file specified by :python:`outf` rather than printing it out
 """
     from matplotlib import pyplot as plt
-    ds = (s[1]-s[0])/N_s
-    X=[(s[0]+ds*k) for k in range(N_s+1) if s[0]+ds*k!=0]
+    if scale == 'log':
+        from numpy import log10
+        ds = (log10(s[1])-log10(s[0]))/N_s
+        X=[10**(log10(s[0])+ds*k) for k in range(N_s+1)]
+    else:
+        ds = (s[1]-s[0])/N_s
+        X=[s[0]+ds*k for k in range(N_s+1) if s[0]+ds*k!=0]
     if dimensionful:
         m2 = m**2
         Y=[1/(ss*gluon_J_inv(ss/m2,x,N,xi,F0,Nf,type)) for ss in X]
@@ -536,7 +544,7 @@ Modulo a factor of :math:`\alpha^{-1}`.
     else:
         plt.savefig(outf)
 
-def gluon_spectral_plot(s = [0,25], N_s = 1000, x = oneloop_settings.x, N = settings.N,
+def gluon_spectral_plot(s = [1E-3,25], N_s = 1000, x = oneloop_settings.x, N = settings.N,
     xi = settings.xi, F0 = oneloop_settings.F0, Nf = settings.Nf, type = oneloop_settings.gluetype,
     ren = True, Z = None, mu0 = settings.mu0, dimensionful = False, m = oneloop_settings.m,
     scale = "log", title = True, outf = None):
@@ -562,8 +570,13 @@ Modulo a factor of :math:`\alpha^{-1}`.
 :param outf: if not :python:`None`, save the output to the file specified by :python:`outf` rather than printing it out
 """
     from matplotlib import pyplot as plt
-    ds = (s[1]-s[0])/N_s
-    X=[s[0]+ds*k for k in range(N_s+1) if s[0]+ds*k!=0]
+    if scale == 'log':
+        from numpy import log10
+        ds = (log10(s[1])-log10(s[0]))/N_s
+        X=[10**(log10(s[0])+ds*k) for k in range(N_s+1)]
+    else:
+        ds = (s[1]-s[0])/N_s
+        X=[s[0]+ds*k for k in range(N_s+1) if s[0]+ds*k!=0]
     if dimensionful:
         m2 = m**2
         Y=[gluon_spectral(ss/m2,x,N,xi,F0,Nf,type,False,Z,mu0,False,m)/m2 for ss in X]

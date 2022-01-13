@@ -28,4 +28,4 @@ Also, the submodules of :python:`PySmeQcd.oneloop` are linked to this module.
 
 from PySmeQcd.oneloop import ghost, gluon, quark
 
-__version__ = '1.0.1-alpha.1'
+__version__ = '1.1.0-alpha'

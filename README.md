@@ -28,15 +28,15 @@ $ pip install PySmeQcd
 
 To use PySmeQcd from the source code:
 
-1. Download the source code from [GitHub](https://github.com/GComitini/PySmeQcd/releases/download/v1.0.1-alpha/PySmeQcd-1.0.1a1.tar.gz).
+1. Download the source code from [GitHub](https://github.com/GComitini/PySmeQcd/releases/download/v1.1.0-alpha/PySmeQcd-1.1.0a0.tar.gz).
   ```console
-  $ wget https://github.com/GComitini/PySmeQcd/releases/download/v1.0.1-alpha/PySmeQcd-1.0.1a1.tar.gz
+  $ wget https://github.com/GComitini/PySmeQcd/releases/download/v1.1.0-alpha/PySmeQcd-1.1.0a0.tar.gz
   ```
 
 2. Unpack the archive and `cd` into the `src` directory.
   ```console
-  $ tar -xzvf PySmeQcd-1.0.1a1.tar.gz
-  $ cd PySmeQcd-1.0.1a1/src
+  $ tar -xzvf PySmeQcd-1.1.0a0.tar.gz
+  $ cd PySmeQcd-1.1.0a0/src
   ```
 
 3. Copy the ```PySmeQcd``` directory into the main directory of your project.

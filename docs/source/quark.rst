@@ -194,6 +194,12 @@ Poles and residues
 
 .. autofunction:: PySmeQcd.oneloop.quark.quark_residue
 
+.. note::
+
+  To obtain the residue of the scalar part of the quark propagator, multiply
+  :python:`quark_residue()` by :python:`quark_M()` computed at the pole
+  :python:`quark_pole()`, using the same parameters in all three functions.
+
 --------------------------------------------------------------
 
 .. _quark_gf:
@@ -204,6 +210,12 @@ Plots
 .. autofunction:: PySmeQcd.oneloop.quark.quark_Z_plot
 
 .. autofunction:: PySmeQcd.oneloop.quark.quark_M_plot
+
+.. autofunction:: PySmeQcd.oneloop.quark.quark_Q_inv_plot
+
+.. autofunction:: PySmeQcd.oneloop.quark.quark_Q_inv_3D_plot
+
+.. autofunction:: PySmeQcd.oneloop.quark.quark_Q_contour
 
 .. autofunction:: PySmeQcd.oneloop.quark.quark_propV_plot
 
